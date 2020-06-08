@@ -1,6 +1,6 @@
 import React, { memo, useContext } from 'react';
 import { ScrollView, Text, Image, View } from 'react-native';
-
+import { useAlbumEffect } from '../state-mgmt/album/useAlbumEffect';
 import { GlobalContext } from '../state-mgmt/GlobalState';
 
 export interface Props {
@@ -10,6 +10,10 @@ export interface Props {
 const Item = ({ route }: Props) => {
   const { state } = useContext(GlobalContext);
   const artist = state.artist.artistMap[route?.params?.id];
+  const { searchAlbumByArtistId } = useAlbumEffect();
+
+  const albums = searchAlbumByArtistId(artist);
+
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic">
       <Image style={{ width: '100%', height: 100 }} source={{ uri: artist.strArtistBanner }} />

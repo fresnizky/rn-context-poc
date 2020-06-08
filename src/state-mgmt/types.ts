@@ -1,4 +1,5 @@
 import { IArtistState } from './artist/state';
+import { IAlbumState } from './album/state';
 
 export interface IAction<T = string, P = any> {
   type: T;
@@ -7,6 +8,7 @@ export interface IAction<T = string, P = any> {
 
 export type IGlobalState = {
   artist: IArtistState;
+  album: IAlbumState;
 };
 
 export interface Deps {

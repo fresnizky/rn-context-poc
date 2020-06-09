@@ -14,7 +14,7 @@ export const useAlbumEffect = () => {
       const { album } = await (await deps.apiService.request(`https://www.theaudiodb.com/api/v1/json/1/album.php?i=${artist.idArtist}`)).json();
       const albumList = (album || []) as IAlbum[];
       if (albumList) dispatch(actions.searchSuccess(albumList));
-      // return albumList;
+      // return artist.idArtist;
     },
     [dispatch]
   );

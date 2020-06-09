@@ -1,5 +1,5 @@
-import React, { memo, useContext } from 'react';
-import { ScrollView, Text, Image, View } from 'react-native';
+import React, { memo, useContext, useEffect } from 'react';
+import { ScrollView, Text, Image, View, FlatList } from 'react-native';
 import { useAlbumEffect } from '../state-mgmt/album/useAlbumEffect';
 import { GlobalContext } from '../state-mgmt/GlobalState';
 
@@ -10,9 +10,12 @@ export interface Props {
 const Item = ({ route }: Props) => {
   const { state } = useContext(GlobalContext);
   const artist = state.artist.artistMap[route?.params?.id];
+  const albums = state.album;
   const { searchAlbumByArtistId } = useAlbumEffect();
 
-  const albums = searchAlbumByArtistId(artist);
+  useEffect(() => {
+    searchAlbumByArtistId(artist);
+  }, [artist.idArtist]);
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic">
@@ -23,6 +26,14 @@ const Item = ({ route }: Props) => {
           {artist.strBiographyEN}
         </Text>
       </View>
+      {albums && (
+        <View>
+          <Text>Albums:</Text>
+          {Object.keys(albums).map(albumId => (
+            <Text key={albumId}>{albums[albumId].strAlbum}</Text>
+          ))}
+        </View>
+      )}
     </ScrollView>
   );
 };

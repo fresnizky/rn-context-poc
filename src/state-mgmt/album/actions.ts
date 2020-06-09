@@ -5,5 +5,5 @@ export enum ACTION_TYPE {
 }
 
 export const actions = {
-  searchSuccess: (album: IAlbum[]) => ({ type: ACTION_TYPE.SEARCH_SUCCESS, payload: { album } })
+  searchSuccess: (albumList: IAlbum[]) => ({ type: ACTION_TYPE.SEARCH_SUCCESS, payload: { albumList } })
 };

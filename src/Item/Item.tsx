@@ -9,6 +9,7 @@ export interface Props {
 
 const Item = ({ route }: Props) => {
   const { state } = useContext(GlobalContext);
+  console.log(state);
   const artist = state.artist.artistMap[route?.params?.id];
   const albums = state.album;
   const { searchAlbumByArtistId } = useAlbumEffect();
@@ -29,7 +30,13 @@ const Item = ({ route }: Props) => {
       {albums && (
         <View>
           <Text>Albums:</Text>
-          {Object.keys(albums).map(albumId => (albums[albumId].idArtist === artist.idArtist ? <Text key={albumId}>{albums[albumId].strAlbum}</Text> : null))}
+          <ScrollView horizontal>
+            {Object.keys(albums).map(albumId =>
+              albums[albumId].idArtist === artist.idArtist && albums[albumId].strAlbumThumb ? (
+                <Image key={albumId} style={{ width: 50, height: 50 }} source={{ uri: albums[albumId].strAlbumThumb }} />
+              ) : null
+            )}
+          </ScrollView>
         </View>
       )}
     </ScrollView>

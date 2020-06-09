@@ -29,9 +29,7 @@ const Item = ({ route }: Props) => {
       {albums && (
         <View>
           <Text>Albums:</Text>
-          {Object.keys(albums).map(albumId => (
-            <Text key={albumId}>{albums[albumId].strAlbum}</Text>
-          ))}
+          {Object.keys(albums).map(albumId => (albums[albumId].idArtist === artist.idArtist ? <Text key={albumId}>{albums[albumId].strAlbum}</Text> : null))}
         </View>
       )}
     </ScrollView>

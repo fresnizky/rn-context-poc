@@ -2,6 +2,7 @@ import React, { memo, useContext, useEffect } from 'react';
 import { ScrollView, Text, Image, View, FlatList } from 'react-native';
 import { useAlbumEffect } from '../state-mgmt/album/useAlbumEffect';
 import { GlobalContext } from '../state-mgmt/GlobalState';
+import { IAlbum } from 'src/state-mgmt/album/state';
 
 export interface Props {
   route: any; // RouteProp<{ id: string; }, any>; /** @todo find out how to use this type */
@@ -9,9 +10,16 @@ export interface Props {
 
 const Item = ({ route }: Props) => {
   const { state } = useContext(GlobalContext);
-  console.log(state);
   const artist = state.artist.artistMap[route?.params?.id];
-  const albums = state.album;
+
+  const albumList = Object.values(
+    Object.keys(state.album.albumMap)
+      .filter(albumId => state.album.albumMap[albumId].idArtist === artist.idArtist && state.album.albumMap[albumId].strAlbumThumb !== null)
+      .reduce((obj, albumId) => {
+        return { ...obj, [albumId]: state.album.albumMap[albumId] };
+      }, {})
+  );
+
   const { searchAlbumByArtistId } = useAlbumEffect();
 
   useEffect(() => {
@@ -27,16 +35,15 @@ const Item = ({ route }: Props) => {
           {artist.strBiographyEN}
         </Text>
       </View>
-      {albums && (
+      {albumList && (
         <View>
           <Text>Albums:</Text>
-          <ScrollView horizontal>
-            {Object.keys(albums).map(albumId =>
-              albums[albumId].idArtist === artist.idArtist && albums[albumId].strAlbumThumb ? (
-                <Image key={albumId} style={{ width: 50, height: 50 }} source={{ uri: albums[albumId].strAlbumThumb }} />
-              ) : null
-            )}
-          </ScrollView>
+          <FlatList
+            horizontal
+            data={albumList}
+            keyExtractor={item => item.idAlbum}
+            renderItem={({ item }: { item: IAlbum }) => <Image style={{ width: 50, height: 50 }} source={{ uri: item.strAlbumThumb }} />}
+          />
         </View>
       )}
     </ScrollView>

@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect } from 'react';
+import React, { memo, useContext, useEffect, useCallback, useMemo } from 'react';
 import { ScrollView, Text, Image, View, FlatList } from 'react-native';
 import { useAlbumEffect } from '../state-mgmt/album/useAlbumEffect';
 import { GlobalContext } from '../state-mgmt/GlobalState';
@@ -12,15 +12,22 @@ const Item = ({ route }: Props) => {
   const { state } = useContext(GlobalContext);
   const artist = state.artist.artistMap[route?.params?.id];
 
-  const albumList = Object.values(
-    Object.keys(state.album.albumMap)
-      .filter(albumId => state.album.albumMap[albumId].idArtist === artist.idArtist && state.album.albumMap[albumId].strAlbumThumb !== null)
-      .reduce((obj, albumId) => {
-        return { ...obj, [albumId]: state.album.albumMap[albumId] };
-      }, {})
+  const albumList = useMemo(
+    () =>
+      Object.values(
+        Object.keys(state.album.albumMap)
+          .filter(albumId => state.album.albumMap[albumId].idArtist === artist.idArtist && state.album.albumMap[albumId].strAlbumThumb !== null)
+          .reduce((obj, albumId) => {
+            return { ...obj, [albumId]: state.album.albumMap[albumId] };
+          }, {})
+      ),
+    [state.album.albumMap]
   );
+  console.log(albumList);
 
   const { searchAlbumByArtistId } = useAlbumEffect();
+  const keyExtractor = useCallback((item: IAlbum) => item.idAlbum, []);
+  const renderItem = useCallback(({ item }: { item: IAlbum }) => <Image style={{ width: 50, height: 50 }} source={{ uri: item.strAlbumThumb }} />, []);
 
   useEffect(() => {
     searchAlbumByArtistId(artist);
@@ -38,12 +45,7 @@ const Item = ({ route }: Props) => {
       {albumList && (
         <View>
           <Text>Albums:</Text>
-          <FlatList
-            horizontal
-            data={albumList}
-            keyExtractor={item => item.idAlbum}
-            renderItem={({ item }: { item: IAlbum }) => <Image style={{ width: 50, height: 50 }} source={{ uri: item.strAlbumThumb }} />}
-          />
+          <FlatList horizontal data={albumList} keyExtractor={keyExtractor} renderItem={renderItem} />
         </View>
       )}
     </ScrollView>

@@ -77,7 +77,21 @@ exports[`Item should render 1`] = `
         Albums:
       </Text>
       <RCTScrollView
-        data={Array []}
+        data={
+          Array [
+            Object {
+              "idAlbum": "1",
+              "idArtist": "1",
+              "intYearReleased": "2000",
+              "strAlbum": "Mr. Bad Guy",
+              "strAlbumCDart": "cdart.png",
+              "strAlbumThumb": "thumb.png",
+              "strAlbumThumbBack": "thumbBack.png",
+              "strDescriptionEN": "Album Description",
+              "strGenre": "Pop",
+            },
+          ]
+        }
         disableVirtualization={false}
         getItem={[Function]}
         getItemCount={[Function]}
@@ -105,7 +119,34 @@ exports[`Item should render 1`] = `
         viewabilityConfigCallbackPairs={Array []}
         windowSize={21}
       >
-        <View />
+        <View>
+          <View
+            onLayout={[Function]}
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                },
+                null,
+              ]
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "uri": "thumb.png",
+                }
+              }
+              style={
+                Object {
+                  "height": 75,
+                  "marginRight": 10,
+                  "width": 75,
+                }
+              }
+            />
+          </View>
+        </View>
       </RCTScrollView>
     </View>
   </View>

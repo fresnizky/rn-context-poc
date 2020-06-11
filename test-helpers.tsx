@@ -20,16 +20,14 @@ export const getArtist_1 = (): IArtist => ({
   strStyle: 'rock'
 });
 
-export const getAlbum_1 = (): IAlbum[] => [
-  {
-    idAlbum: '1',
-    idArtist: '1',
-    intYearReleased: '2000',
-    strAlbum: 'Mr. Bad Guy',
-    strAlbumCDart: 'cdart.png',
-    strAlbumThumb: 'thumb.png',
-    strAlbumThumbBack: 'thumbBack.png',
-    strDescriptionEN: 'Album Description',
-    strGenre: 'Pop Rock'
-  }
-];
+export const getAlbum_1 = (): IAlbum => ({
+  idAlbum: '1',
+  idArtist: '1',
+  intYearReleased: '2000',
+  strAlbum: 'Mr. Bad Guy',
+  strAlbumCDart: 'cdart.png',
+  strAlbumThumb: 'thumb.png',
+  strAlbumThumbBack: 'thumbBack.png',
+  strDescriptionEN: 'Album Description',
+  strGenre: 'Pop'
+});

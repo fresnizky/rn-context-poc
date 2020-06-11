@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-native-testing-library';
 
 import Item from './Item';
-import { getArtist_1, getMockDeps } from '../../test-helpers';
+import { getArtist_1, getAlbum_1, getMockDeps } from '../../test-helpers';
 import { GlobalProvider, initialState } from '../state-mgmt/GlobalState';
 
 describe('Item', () => {
@@ -10,11 +10,16 @@ describe('Item', () => {
     const { toJSON } = render(
       <GlobalProvider
         deps={getMockDeps()}
-        initState={{ ...initialState, artist: { ...initialState.artist, artistMap: { [getArtist_1().idArtist]: getArtist_1() } } }}
+        initState={{
+          ...initialState,
+          artist: { ...initialState.artist, artistMap: { [getArtist_1().idArtist]: getArtist_1() } },
+          album: { ...initialState.album, albumMap: { [getAlbum_1().idAlbum]: getAlbum_1() } }
+        }}
       >
         <Item route={{ params: { id: getArtist_1().idArtist } }} />
       </GlobalProvider>
     );
+
     expect(toJSON()).toMatchSnapshot();
   });
 });

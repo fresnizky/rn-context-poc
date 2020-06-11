@@ -1,5 +1,6 @@
 import { IArtist } from './src/state-mgmt/artist/state';
 import { Deps } from './src/state-mgmt/types';
+import { IAlbum } from 'src/state-mgmt/album/state';
 
 export const getMockDeps = (): Deps =>
   ({
@@ -18,3 +19,17 @@ export const getArtist_1 = (): IArtist => ({
   strCountry: 'USA',
   strStyle: 'rock'
 });
+
+export const getAlbum_1 = (): IAlbum[] => [
+  {
+    idAlbum: '1',
+    idArtist: '1',
+    intYearReleased: '2000',
+    strAlbum: 'Mr. Bad Guy',
+    strAlbumCDart: 'cdart.png',
+    strAlbumThumb: 'thumb.png',
+    strAlbumThumbBack: 'thumbBack.png',
+    strDescriptionEN: 'Album Description',
+    strGenre: 'Pop Rock'
+  }
+];
